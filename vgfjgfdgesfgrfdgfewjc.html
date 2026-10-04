@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>服务器状态控制台</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .dashboard {
+            background: #ffffff;
+            width: 100%;
+            max-width: 400px;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            padding: 30px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 1.4rem;
+            color: #1f2937;
+            margin-top: 0;
+            margin-bottom: 25px;
+        }
+
+        /* 开关样式 */
+        .switch-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: #10b981;
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+
+        /* 状态文字 */
+        .status-text {
+            font-weight: bold;
+            font-size: 1.1rem;
+            color: #ef4444; /* 默认红色 */
+        }
+        .status-text.online {
+            color: #10b981; /* 开启后绿色 */
+        }
+
+        /* 公告区域 */
+        .notice-board {
+            background: #f9fafb;
+            border: 1px solid #e5e7eb;
+            border-radius: 10px;
+            padding: 15px;
+            text-align: left;
+            margin-top: 25px;
+        }
+
+        .notice-title {
+            font-size: 0.85rem;
+            color: #6b7280;
+            font-weight: bold;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .notice-content {
+            font-size: 0.95rem;
+            color: #374151;
+            line-height: 1.6;
+            white-space: pre-wrap; /* 保留换行 */
+        }
+    </style>
+</head>
+<body>
+
+    <div class="dashboard">
+        <h1>服务器控制台</h1>
+        
+        <!-- 开关部分 -->
+        <div class="switch-container">
+            <label class="switch">
+                <input type="checkbox" id="server-toggle" checked>
+                <span class="slider"></span>
+            </label>
+            <span class="status-text online" id="status-label">服务器已启动</span>
+        </div>
+
+        <!-- 公告部分（以后只需改这里的内容） -->
+        <div class="notice-board" id="notice-container">
+            <div class="notice-title">📢 最新公告</div>
+            <div class="notice-content" id="notice-content">
+                暂无公告。
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ==========================================
+        // 1. 这里是公告内容，以后你要发新公告，直接改这里双引号里的文字
+        // ==========================================
+        const currentNotice = "服务器已顺利上线，欢迎各位老玩家体验！\n如果遇到问题请及时反馈。";
+
+        // 把公告内容渲染到页面上
+        document.getElementById('notice-content').textContent = currentNotice;
+
+        // ==========================================
+        // 2. 这里是开关的逻辑
+        // ==========================================
+        const toggle = document.getElementById('server-toggle');
+        const statusLabel = document.getElementById('status-label');
+
+        toggle.addEventListener('change', function() {
+            if (this.checked) {
+                statusLabel.textContent = '服务器已启动';
+                statusLabel.classList.add('online');
+            } else {
+                statusLabel.textContent = '服务器已关闭';
+                statusLabel.classList.remove('online');
+            }
+        });
+    </script>
+</body>
+</html>
